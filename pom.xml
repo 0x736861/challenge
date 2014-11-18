@@ -20,6 +20,7 @@
         <module>storage-api</module>
         <module>storage-sql</module>
         <module>model</module>
+        <module>common</module>
     </modules>
 
     <repositories>
@@ -29,8 +30,6 @@
             <url>http://maven.twttr.com</url>
         </repository>
     </repositories>
-
-    <!-- DEPENDENCIES -->
 
     <dependencies>
 
@@ -45,10 +44,22 @@
             <artifactId>util-core_${scala.version}</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.version}</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -111,22 +122,37 @@
                 <version>6.13.2</version>
             </dependency>
 
-            <!--<dependency>-->
-            <!--<groupId>org.squeryl</groupId>-->
-            <!--<artifactId>squeryl_${scala.version}</artifactId>-->
-            <!--<version>0.9.5-6</version>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.squeryl</groupId>
+                <artifactId>squeryl_${scala.version}</artifactId>
+                <version>0.9.5-6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mchange</groupId>
+                <artifactId>c3p0</artifactId>
+                <version>0.9.5-pre8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.181</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_${scala.version}</artifactId>
+                <version>2.2.2</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <!-- END DEPENDENCIES -->
-
-    <!-- BUILD SETTINGS -->
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
 
-        <!-- BUILD PLUGINS -->
         <plugins>
 
             <plugin>
@@ -159,11 +185,26 @@
                 </executions>
             </plugin>
 
+            <!-- disable surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
 
+            <!-- enable scalatest -->
             <plugin>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest-maven-plugin</artifactId>
-                <version>1.0-M2</version>
+                <version>1.0</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
                 <executions>
                     <execution>
                         <id>test</id>
@@ -175,7 +216,6 @@
             </plugin>
 
         </plugins>
-        <!-- END BUILD PLUGINS -->
 
     </build>
 </project>

@@ -11,5 +11,32 @@
 
     <artifactId>storage-sql</artifactId>
 
+    <dependencies>
 
+        <dependency>
+            <groupId>org.challenge.eshop</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.challenge.eshop</groupId>
+            <artifactId>storage-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.squeryl</groupId>
+            <artifactId>squeryl_${scala.version}</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+    </dependencies>
 </project>

@@ -7,8 +7,12 @@ import org.challenge.eshop.model.ProductInfo
  * Created by Alexander Shurmin.
  */
 trait ProductManager {
+
   def getById(id: String): Future[Option[ProductInfo]]
+
   def create(product: ProductInfo): Future[ProductInfo]
+
   def update(product: ProductInfo): Future[Unit]
+
   def delete(id: String): Future[Boolean]
 }

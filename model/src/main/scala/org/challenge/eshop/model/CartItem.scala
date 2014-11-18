@@ -6,6 +6,6 @@ import org.joda.money.Money
  * Created by Alexander Shurmin.
  */
 case class CartItem(
-  product: Product,
+  product: ProductInfo,
   quantity: Double,
   price: Money)

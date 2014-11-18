@@ -13,6 +13,10 @@
     <description>My Web App</description>
     <inceptionYear>2014</inceptionYear>
 
+    <properties>
+        <serverMainClass>org.challenge.eshop.ws.EShopWebServer</serverMainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -27,9 +31,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -60,9 +61,8 @@
                     <launchers>
                         <launcher>
                             <id>main</id>
-                            <mainClass>org.challenge.eshop.ws.EShopWebServer</mainClass>
+                            <mainClass>${serverMainClass}</mainClass>
                         </launcher>
-                        <!-- you could define other launcher -->
                     </launchers>
                 </configuration>
                 <executions>
@@ -92,7 +92,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.challenge.eshop.ws.EShopWebServer</mainClass>
+                            <mainClass>${serverMainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -105,7 +105,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
         </plugins>
 
