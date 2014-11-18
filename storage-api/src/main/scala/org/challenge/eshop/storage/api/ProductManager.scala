@@ -14,5 +14,5 @@ trait ProductManager {
 
   def update(product: ProductInfo): Future[Unit]
 
-  def delete(id: String): Future[Boolean]
+  def delete(id: String): Future[Int]
 }

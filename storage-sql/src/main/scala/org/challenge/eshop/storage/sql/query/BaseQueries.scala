@@ -33,9 +33,9 @@ trait BaseQueries {
     }
   }
 
-  def delete(id: String): Boolean = {
+  def delete(id: String): Int = {
     inTransaction {
-      table.deleteWhere(p => p.id === id) != 0
+      table.deleteWhere(p => p.id === id)
     }
   }
 }

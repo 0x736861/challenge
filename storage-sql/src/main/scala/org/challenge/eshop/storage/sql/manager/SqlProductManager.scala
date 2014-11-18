@@ -21,7 +21,12 @@ object SqlProductManager extends ProductManager {
     Future.value(ProductQueries.create(entityWithId))
   }
 
-  override def update(product: ProductInfo): Future[Unit] = ???
+  override def update(product: ProductInfo): Future[Unit] = {
+    ProductQueries.update(product)
+    Future.value(Unit)
+  }
 
-  override def delete(id: String): Future[Boolean] = ???
+  override def delete(id: String): Future[Int] = {
+    Future.value(ProductQueries.delete(id))
+  }
 }
