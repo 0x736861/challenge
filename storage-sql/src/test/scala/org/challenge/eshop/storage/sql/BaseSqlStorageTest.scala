@@ -1,8 +1,6 @@
 package org.challenge.eshop.storage.sql
 
-import org.challenge.eshop.storage.sql.schema.EShopSchema
 import org.scalatest._
-import org.squeryl.PrimitiveTypeMode._
 
 /**
  * Created by Alexander Shurmin.
@@ -23,15 +21,11 @@ trait BaseSqlStorageTest extends FunSpec with Matchers with BeforeAndAfter with 
   }
 
   before({
-    transaction {
-      EShopSchema.create
-    }
+    SqlDbManager.createSchema()
   })
 
   after({
-    transaction {
-      EShopSchema.drop
-    }
+    SqlDbManager.dropSchema()
   })
 
 }

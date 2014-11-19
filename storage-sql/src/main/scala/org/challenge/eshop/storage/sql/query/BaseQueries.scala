@@ -21,6 +21,16 @@ trait BaseQueries {
     }
   }
 
+  def getInRange(offset: Int, limit: Int): List[EntityType] = {
+    inTransaction {
+      from(table)(e =>
+        select(e)
+          orderBy e.id
+      ).page(offset, limit)
+        .toList
+    }
+  }
+
   def create(entity: EntityType): EntityType = {
     inTransaction {
       table.insert(entity)

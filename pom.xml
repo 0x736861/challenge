@@ -12,6 +12,8 @@
         <encoding>UTF-8</encoding>
         <scala.version>2.10</scala.version>
         <scala.minor.version>3</scala.minor.version>
+        <slfj.version>1.7.7</slfj.version>
+        <jackson.version>2.2.2</jackson.version>
     </properties>
 
     <modules>
@@ -42,6 +44,16 @@
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>util-core_${scala.version}</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
         </dependency>
 
         <dependency>
@@ -126,6 +138,12 @@
                 <groupId>org.squeryl</groupId>
                 <artifactId>squeryl_${scala.version}</artifactId>
                 <version>0.9.5-6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-library</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -141,6 +159,36 @@
             </dependency>
 
             <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>1.2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slfj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slfj.version}</version>
+            </dependency>
+
+            <!--Jackson-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-scala_${scala.version}</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest_${scala.version}</artifactId>
                 <version>2.2.2</version>
@@ -152,21 +200,60 @@
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
+
+            <!--<plugin>-->
+            <!--<groupId>net.alchim31.maven</groupId>-->
+            <!--<artifactId>scala-maven-plugin</artifactId>-->
+            <!--<version>3.1.0</version>-->
+            <!--<configuration>-->
+            <!--<recompileMode>incremental</recompileMode>-->
+            <!--<scalaVersion>${scala.version}.${scala.minor.version}</scalaVersion>-->
+            <!--<args>-->
+            <!--<arg>-unchecked</arg>-->
+            <!--<arg>-deprecation</arg>-->
+            <!--<arg>-explaintypes</arg>-->
+            <!--</args>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>compile</goal>-->
+            <!--<goal>testCompile</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<args>-->
+            <!--<arg>-make:transitive</arg>-->
+            <!--<arg>-dependencyfile</arg>-->
+            <!--<arg>${project.build.directory}/.scala_dependencies</arg>-->
+            <!--</args>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.6</version>
                 <configuration>
-                    <recompileMode>incremental</recompileMode>
+                    <charset>${encoding}</charset>
                     <scalaVersion>${scala.version}.${scala.minor.version}</scalaVersion>
-                    <args>
-                        <arg>-unchecked</arg>
-                        <arg>-deprecation</arg>
-                        <arg>-explaintypes</arg>
-                    </args>
                 </configuration>
                 <executions>
                     <execution>
@@ -174,16 +261,10 @@
                             <goal>compile</goal>
                             <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <args>
-                                <arg>-make:transitive</arg>
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                            </args>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
 
             <!-- disable surefire -->
             <plugin>
