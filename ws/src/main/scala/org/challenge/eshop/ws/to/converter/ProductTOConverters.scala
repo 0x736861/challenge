@@ -2,21 +2,18 @@ package org.challenge.eshop.ws.to.converter
 
 import org.challenge.eshop.model.ProductInfo
 import org.challenge.eshop.ws.to.ProductTO
-import org.joda.money.{CurrencyUnit, Money}
 
 /**
  * Created by Alexander Shurmin.
  */
-object ProductTOConverters {
+trait ProductTOConverters {
 
   implicit class ProductModel2TOConverter(model: ProductInfo) {
     def toTransferObject: ProductTO = {
       ProductTO(
         id = model.id,
-        name = model.name,
-        description = model.description,
-        price = model.price.getAmount.doubleValue(),
-        currencyUnit = model.price.getCurrencyUnit.getCode
+        name = Option(model.name),
+        price = Option(model.price)
       )
     }
   }
@@ -25,10 +22,19 @@ object ProductTOConverters {
     def toModel: ProductInfo = {
       ProductInfo(
         id = to.id,
-        name = to.name,
-        description = to.description,
-        price = Money.of(CurrencyUnit.of(to.currencyUnit), to.price)
+        name = to.name.getOrElse(throw new IllegalArgumentException),
+        price = to.price.getOrElse(throw new IllegalArgumentException)
       )
     }
   }
+
+  implicit class ProductModelMergeWithTO(model: ProductInfo) {
+    def mergeWith(to: ProductTO): ProductInfo = {
+      var resultModel = model
+      if (to.name.isDefined) resultModel = resultModel.copy(name = to.name.get)
+      if (to.price.isDefined) resultModel = resultModel.copy(price = to.price.get)
+      resultModel
+    }
+  }
+
 }

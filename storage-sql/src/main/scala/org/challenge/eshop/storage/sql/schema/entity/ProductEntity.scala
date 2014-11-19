@@ -13,11 +13,6 @@ case class ProductEntity(
   @Column(length = 512)
   name: String,
 
-  description: Option[String] = None,
-
-  price: BigDecimal,
-
-  @Column(length = 64)
-  currencyUnit: String
+  price: BigDecimal
 
   ) extends KeyedEntity[String]

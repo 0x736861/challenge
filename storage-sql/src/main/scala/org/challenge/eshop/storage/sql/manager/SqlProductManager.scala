@@ -20,9 +20,12 @@ object SqlProductManager extends ProductManager {
     Future.value(ProductQueries.getInRange(offset, limit).map(_.toModel))
   }
 
-  override def create(entity: ProductInfo): Future[ProductInfo] = {
-    val entityWithId = entity.copy(id = Some(EntityIdGenerator.nextId))
-    Future.value(ProductQueries.create(entityWithId.toEntity).toModel)
+  override def create(product: ProductInfo): Future[ProductInfo] = {
+    val preparedProduct = product.id match {
+      case Some(_) => product
+      case _ => product.copy(id = Some(EntityIdGenerator.nextId))
+    }
+    Future.value(ProductQueries.create(preparedProduct.toEntity).toModel)
   }
 
   override def update(product: ProductInfo): Future[Unit] = {

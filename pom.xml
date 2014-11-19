@@ -104,19 +104,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.joda</groupId>
-                <artifactId>joda-money</artifactId>
-                <version>0.9.1</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.joda</groupId>
-                <artifactId>joda-convert</artifactId>
-                <version>1.7</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.twitter</groupId>
                 <artifactId>finatra_${scala.version}</artifactId>
                 <version>1.5.3</version>
@@ -186,6 +173,12 @@
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-scala_${scala.version}</artifactId>
                 <version>${jackson.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scala-library</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>

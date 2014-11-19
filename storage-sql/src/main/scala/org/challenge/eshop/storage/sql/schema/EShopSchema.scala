@@ -18,7 +18,6 @@ object EShopSchema extends Schema {
   // Column attributes
 
   on(product)(p => declare(
-    p.id is primaryKey,
-    p.description is dbType("TEXT")
+    p.id is primaryKey
   ))
 }

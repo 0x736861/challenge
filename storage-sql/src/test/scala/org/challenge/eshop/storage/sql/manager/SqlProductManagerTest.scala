@@ -3,7 +3,6 @@ package org.challenge.eshop.storage.sql.manager
 import org.challenge.eshop.common.converter.TwitterFutureConverter._
 import org.challenge.eshop.model.ProductInfo
 import org.challenge.eshop.storage.sql.BaseSqlStorageTest
-import org.joda.money.{CurrencyUnit, Money}
 import org.scalatest.concurrent.ScalaFutures
 
 /**
@@ -13,7 +12,7 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
 
   describe("SqlProductManager") {
     it("should create one Product record") {
-      val product = ProductInfo(name = "product", price = Money.of(CurrencyUnit.of("USD"), 55.77))
+      val product = ProductInfo(name = "product", price = 55.77)
 
       ScalaFutures.whenReady(SqlProductManager.create(product).toScala)(result => {
         result.id.isDefined shouldEqual true
@@ -22,7 +21,7 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
     }
 
     it("should get Product by Id") {
-      val product = ProductInfo(name = "product", price = Money.of(CurrencyUnit.of("USD"), 55.77))
+      val product = ProductInfo(name = "product", price = 55.77)
 
       val future = SqlProductManager.create(product)
         .flatMap(createdEntity => SqlProductManager.getById(createdEntity.id.get).map(entityById => (createdEntity, entityById)))
@@ -35,26 +34,25 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
     }
 
     it("should update product") {
-      val product = ProductInfo(name = "product", price = Money.of(CurrencyUnit.of("USD"), 55.77))
-      val newDescriptionValue = "description"
-      val newPrice = Money.of(CurrencyUnit.of("RUR"), 100.99)
+      val product = ProductInfo(name = "product", price = 55.77)
+      val newName = "newProduct"
+      val newPrice = 100.99
 
       val future = SqlProductManager.create(product).flatMap(createdEntity => {
-        val entityWithChanges = createdEntity.copy(description = Some(newDescriptionValue), price = newPrice)
+        val entityWithChanges = createdEntity.copy(name = newName, price = newPrice)
         SqlProductManager.update(entityWithChanges).flatMap(_ =>
           SqlProductManager.getById(createdEntity.id.get)
         )
       })
 
       ScalaFutures.whenReady(future.toScala)(updatedEntity => {
-        updatedEntity.get.description.isDefined shouldEqual true
-        updatedEntity.get.description.get shouldEqual newDescriptionValue
+        updatedEntity.get.name shouldEqual newName
         updatedEntity.get.price shouldEqual newPrice
       })
     }
 
     it("should delete product") {
-      val product = ProductInfo(name = "product", price = Money.of(CurrencyUnit.of("USD"), 55.77))
+      val product = ProductInfo(name = "product", price = 55.77)
 
       val future = for {
         createdEntity <- SqlProductManager.create(product)

@@ -1,6 +1,5 @@
 package org.challenge.eshop.model
 
-import org.joda.money.Money
 
 /**
  * Created by Alexander Shurmin.
@@ -8,4 +7,4 @@ import org.joda.money.Money
 case class CartItem(
   product: ProductInfo,
   quantity: Double,
-  price: Money)
+  price: Double)

@@ -5,8 +5,6 @@ package org.challenge.eshop.ws.to
  */
 case class ProductTO(
   id: Option[String] = None,
-  name: String,
-  description: Option[String] = None,
-  price: Double,
-  currencyUnit: String
+  name: Option[String] = None,
+  price: Option[Double] = None
   )

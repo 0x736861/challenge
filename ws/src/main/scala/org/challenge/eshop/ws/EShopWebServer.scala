@@ -1,21 +1,17 @@
 package org.challenge.eshop.ws
 
 import com.twitter.finatra.FinatraServer
-import com.twitter.util.{Future, Await}
-import com.typesafe.config.ConfigFactory
-import org.challenge.eshop.core.service.ProductService
+import com.twitter.util.{Await, Future}
 import org.challenge.eshop.model.ProductInfo
-import org.challenge.eshop.storage.api.EntityManagerFactory
-import org.challenge.eshop.storage.sql.{SqlDbManager, JdbcSettings, SqlEntityManagerFactory}
+import org.challenge.eshop.storage.sql.{JdbcSettings, SqlDbManager}
 import org.challenge.eshop.ws.controller.{ProductController, TimeController}
-import org.joda.money.{CurrencyUnit, Money}
 
 /**
  * Created by Alexander Shurmin.
  */
 object EShopWebServer extends FinatraServer {
 
-  import Services._
+  import org.challenge.eshop.ws.Services._
 
   initStorage()
 
@@ -46,8 +42,8 @@ object EShopWebServer extends FinatraServer {
 
   private def fillDemoDatabase(): Unit = {
     Await.ready(Future.join(
-      productService.create(ProductInfo(name = "product1", price = Money.of(CurrencyUnit.of("USD"), 11.22))),
-      productService.create(ProductInfo(name = "product2", price = Money.of(CurrencyUnit.of("USD"), 33.44)))
+      productService.create(ProductInfo(name = "product1", price = 11.22)),
+      productService.create(ProductInfo(name = "product2", price = 33.44))
     ))
   }
 }
