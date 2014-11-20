@@ -8,7 +8,7 @@ import org.challenge.eshop.ws.to.converter.ProductTOConverter
 /**
  * Created by Alexander Shurmin.
  */
-class ProductController(apiVersion: String)(implicit productService: ProductService) extends BaseController(apiVersion) {
+class ProductController(apiVersion: String)(implicit productService: ProductService) extends CRUDController(s"/api/$apiVersion/products") {
 
   override type ModelType = ProductInfo
 

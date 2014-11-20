@@ -6,5 +6,4 @@ package org.challenge.eshop.model
  */
 case class CartItem(
   product: ProductInfo,
-  quantity: Double,
-  price: Double)
+  quantity: Double)
