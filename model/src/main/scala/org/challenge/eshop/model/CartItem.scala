@@ -6,4 +6,5 @@ package org.challenge.eshop.model
  */
 case class CartItem(
   sku: String,
-  quantity: Double)
+  quantity: Double,
+  product: Option[ProductInfo] = None)

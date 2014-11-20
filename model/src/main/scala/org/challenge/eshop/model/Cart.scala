@@ -3,4 +3,6 @@ package org.challenge.eshop.model
 /**
  * Created by Alexander Shurmin.
  */
-case class Cart(id: Option[String])
+case class Cart(
+  id: Option[String],
+  items: Option[List[CartItem]] = None)

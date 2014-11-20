@@ -30,4 +30,8 @@ class CartService(implicit entityManagerFactory: EntityManagerFactory, storeServ
       case false => logger.warning(s"Can't postpone all products to reserve")
     }
   }
+
+  def getCartWithItems(cartId: String): Future[Option[Cart]] = {
+    entityManager.getCardWithItems(cartId)
+  }
 }

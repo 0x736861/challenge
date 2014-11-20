@@ -14,7 +14,7 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
 
   override type TransferObjectType = ProductTO
 
-  override implicit val transferObjectManifest = manifest[ProductTO]
+  override val transferObjectManifest = manifest[ProductTO]
 
   override val modelService = productService
 

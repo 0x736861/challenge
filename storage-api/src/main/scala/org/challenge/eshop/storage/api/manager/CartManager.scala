@@ -10,4 +10,6 @@ trait CartManager extends CRUDManager[Cart] {
 
   def addItems(cartId: String, items: List[CartItem]): Future[Unit]
 
+  def getCardWithItems(cartId: String): Future[Option[Cart]]
+
 }

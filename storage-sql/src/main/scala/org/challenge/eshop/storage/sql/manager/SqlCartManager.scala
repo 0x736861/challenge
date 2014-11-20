@@ -1,10 +1,10 @@
 package org.challenge.eshop.storage.sql.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.{CartItem, Cart}
+import org.challenge.eshop.model.{Cart, CartItem}
 import org.challenge.eshop.storage.api.manager.CartManager
-import org.challenge.eshop.storage.sql.converter.CartEntityConverter._
-import org.challenge.eshop.storage.sql.converter.CartItemEntityConverter
+import org.challenge.eshop.storage.sql.converter.ProductEntityConverter._
+import org.challenge.eshop.storage.sql.converter.{CartEntityConverter, CartItemEntityConverter}
 import org.challenge.eshop.storage.sql.query.{CartItemQueries, CartQueries}
 import org.challenge.eshop.storage.sql.util.EntityIdGenerator
 
@@ -14,17 +14,33 @@ import org.challenge.eshop.storage.sql.util.EntityIdGenerator
 object SqlCartManager extends CartManager {
 
   override def getById(id: String): Future[Option[Cart]] = {
-    Future.value(CartQueries.getById(id).map(_.toModel))
+    Future.value(CartQueries.getById(id).map(CartEntityConverter.toModel))
   }
 
   override def getInRange(offset: Int, limit: Int): Future[List[Cart]] = ???
+
+  def getCardWithItems(cartId: String): Future[Option[Cart]] = {
+    CartQueries.getCartWithItems(cartId) match {
+      case Nil => Future.None
+      case cartWithItemEntities =>
+        val cart = cartWithItemEntities.head._1
+        val cartItems = cartWithItemEntities map {
+          case (_, Some(productInfo), Some(quantity)) => CartItem(sku = productInfo.id, quantity = quantity, product = Some(productInfo.toModel))
+        } match {
+          case Nil => None
+          case list => Some(list)
+        }
+        Future(Some(CartEntityConverter.toModel(cart).copy(items = cartItems)))
+    }
+  }
 
   override def create(cart: Cart, id: Option[String] = None): Future[Cart] = {
     val preparedCart = cart.id match {
       case Some(_) => cart
       case _ => cart.copy(id = id.orElse(Some(EntityIdGenerator.nextId)))
     }
-    Future.value(CartQueries.create(preparedCart.toEntity).toModel)
+    val entity = CartEntityConverter.toEntity(preparedCart)
+    Future.value(CartQueries.create(entity)).map(CartEntityConverter.toModel)
   }
 
   override def update(cart: Cart): Future[Unit] = ???

@@ -3,7 +3,7 @@ package org.challenge.eshop.ws.controller
 import com.twitter.finatra.FinatraServer
 import com.twitter.finatra.test.FlatSpecHelper
 import org.challenge.eshop.ws.EShopWebServer
-import org.challenge.eshop.ws.to.{ProductTO, CartItemTO, CartTO}
+import org.challenge.eshop.ws.to.{CartItemTO, ProductTO, CartTO}
 import org.challenge.eshop.common.converter.JsonConverter._
 
 /**
@@ -27,17 +27,23 @@ class CartControllerTest extends FlatSpecHelper {
   }
 
   "POST /api/v1/cart/cartId/items" should "add items to cart" in {
-    val productTO = ProductTO(name = Some("product1"), price = Some(100.0))
-    post("/api/v1/product", body = toJson(productTO))
-    val productId = fromJson[ProductTO](response.body).id.getOrElse(throw new Exception("ProductId is not specified"))
+    val product1TO = ProductTO(name = Some("product1"), price = Some(100.0))
+    post("/api/v1/product", body = toJson(product1TO))
+    val product1Id = fromJson[ProductTO](response.body).id.getOrElse(throw new Exception("ProductId is not specified"))
+
+    val product2TO = ProductTO(name = Some("product2"), price = Some(200.0))
+    post("/api/v1/product", body = toJson(product2TO))
+    val product2Id = fromJson[ProductTO](response.body).id.getOrElse(throw new Exception("ProductId is not specified"))
 
     val cartTO = CartTO()
     post("/api/v1/cart", body = toJson(cartTO))
-    val createdCartTO = fromJson[CartTO](response.body)
+    val cartId = fromJson[CartTO](response.body).id.get
 
-    val itemsTO = List(CartItemTO(productId, 10.0))
-    post(s"/api/v1/cart/${createdCartTO.id.get}/items", body = toJson(itemsTO))
-
+    val itemsTO = List(CartItemTO(product1Id, 10.0), CartItemTO(product2Id, 20.0))
+    post(s"/api/v1/cart/$cartId/items", body = toJson(itemsTO))
     response.code should equal(201)
+
+    get(s"/api/v1/cart/$cartId")
+    println(response.body)
   }
 }

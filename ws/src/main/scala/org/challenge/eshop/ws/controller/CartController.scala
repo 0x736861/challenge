@@ -13,6 +13,11 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus
  */
 class CartController(apiVersion: String)(implicit cartService: CartService) extends BaseController {
 
+  get(s"/api/$apiVersion/cart/:cartId") { implicit request =>
+    val cartId = routeParam("cartId")
+    cartService.getCartWithItems(cartId).map(render.json)
+  }
+
   post(s"/api/$apiVersion/cart") { implicit request =>
     val content = contentAsString
     val to = Try(fromJson[CartTO](content)).getOrElse(throw new ContentParseException(content))

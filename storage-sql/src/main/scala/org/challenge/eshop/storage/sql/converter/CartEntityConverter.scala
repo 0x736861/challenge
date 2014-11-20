@@ -9,25 +9,19 @@ import org.challenge.eshop.storage.sql.schema.entity.CartEntity
  */
 object CartEntityConverter {
 
-  implicit class Model2Entity(model: Cart) {
-    def toEntity: CartEntity = {
-      CartEntity(
-        id = model.id.getOrElse("")
-      )
-    }
+  def toEntity(model: Cart): CartEntity = {
+    CartEntity(
+      id = model.id.getOrElse("")
+    )
   }
 
-  implicit class Entity2Model(entity: CartEntity) {
-    def toModel: Cart = {
-      Cart(
-        id = Some(entity.id))
-    }
+  def toModel(entity: CartEntity): Cart = {
+    Cart(
+      id = Some(entity.id))
   }
 
-  implicit class OptionEntity2Model(entity: Option[CartEntity]) {
-    def toModel: Option[Cart] = {
-      entity.map(_.toModel)
-    }
+  def toOptionModel(entity: Option[CartEntity]): Option[Cart] = {
+    entity.map(toModel)
   }
 
 }

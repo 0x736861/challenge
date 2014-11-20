@@ -14,4 +14,10 @@ object CartItemEntityConverter {
       sku = model.sku,
       quantity = model.quantity)
   }
+
+  def toModel(entity: CartItemEntity): CartItem = {
+    CartItem(
+      sku = entity.sku,
+      quantity = entity.quantity)
+  }
 }
