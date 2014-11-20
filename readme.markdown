@@ -1,7 +1,7 @@
 # Shopping cart RESTFull service example
 
 
-### Runs your app on port 7070
+### Runs on port 7070
 
     mvn clean install
     java -jar ws/target/ws-1.0-SNAPSHOT-jar-with-dependencies.jar
