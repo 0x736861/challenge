@@ -6,13 +6,13 @@ import org.challenge.eshop.model.ProductInfo
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseManager[T] {
+trait CRUDManager[T] {
 
   def getById(id: String): Future[Option[T]]
 
   def getInRange(offset: Int, limit: Int): Future[List[T]]
 
-  def create(model: T, id: Option[String]): Future[T]
+  def create(model: T, id: Option[String] = None): Future[T]
 
   def update(model: T): Future[Unit]
 

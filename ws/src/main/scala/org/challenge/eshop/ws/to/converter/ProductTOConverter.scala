@@ -10,7 +10,7 @@ object ProductTOConverter extends TOConverter[ProductTO, ProductInfo] {
 
   override def toTransferObject(model: ProductInfo): ProductTO = {
     ProductTO(
-      id = model.id,
+      id = model.sku,
       name = Option(model.name),
       price = Option(model.price)
     )
@@ -25,7 +25,7 @@ object ProductTOConverter extends TOConverter[ProductTO, ProductInfo] {
 
   override def toModel(to: ProductTO): ProductInfo = {
     ProductInfo(
-      id = to.id,
+      sku = to.id,
       name = to.name.getOrElse(throw new IllegalArgumentException),
       price = to.price.getOrElse(throw new IllegalArgumentException)
     )

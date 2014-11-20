@@ -9,20 +9,20 @@ import org.challenge.eshop.storage.sql.schema.entity.ProductEntity
  */
 object ProductEntityConverter {
 
-  implicit class ProductModel2Entity(model: ProductInfo) {
+  implicit class Model2Entity(model: ProductInfo) {
     def toEntity: ProductEntity = {
       ProductEntity(
-        id = model.id.getOrElse(""),
+        id = model.sku.getOrElse(""),
         name = model.name,
         price = model.price
       )
     }
   }
 
-  implicit class ProductEntity2Model(entity: ProductEntity) {
+  implicit class Entity2Model(entity: ProductEntity) {
     def toModel: ProductInfo = {
       ProductInfo(
-        id = Some(entity.id),
+        sku = Some(entity.id),
         name = entity.name,
         price = entity.price.doubleValue()
       )

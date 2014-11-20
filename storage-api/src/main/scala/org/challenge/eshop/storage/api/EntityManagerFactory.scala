@@ -1,6 +1,6 @@
 package org.challenge.eshop.storage.api
 
-import org.challenge.eshop.storage.api.manager.ProductManager
+import org.challenge.eshop.storage.api.manager.{CartManager, ProductManager}
 
 /**
  * Created by Alexander Shurmin.
@@ -8,4 +8,6 @@ import org.challenge.eshop.storage.api.manager.ProductManager
 trait EntityManagerFactory {
 
   def productManager: ProductManager
+
+  def cartManager: CartManager
 }

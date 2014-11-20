@@ -15,8 +15,8 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
       val product = ProductInfo(name = "product", price = 55.77)
 
       ScalaFutures.whenReady(SqlProductManager.create(product).toScala)(result => {
-        result.id.isDefined shouldEqual true
-        product shouldEqual result.copy(id = None)
+        result.sku.isDefined shouldEqual true
+        product shouldEqual result.copy(sku = None)
       })
     }
 
@@ -24,7 +24,7 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
       val product = ProductInfo(name = "product", price = 55.77)
 
       val future = SqlProductManager.create(product)
-        .flatMap(createdEntity => SqlProductManager.getById(createdEntity.id.get).map(entityById => (createdEntity, entityById)))
+        .flatMap(createdEntity => SqlProductManager.getById(createdEntity.sku.get).map(entityById => (createdEntity, entityById)))
 
       ScalaFutures.whenReady(future.toScala) {
         case (createdEntity, entityById) =>
@@ -41,7 +41,7 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
       val future = SqlProductManager.create(product).flatMap(createdEntity => {
         val entityWithChanges = createdEntity.copy(name = newName, price = newPrice)
         SqlProductManager.update(entityWithChanges).flatMap(_ =>
-          SqlProductManager.getById(createdEntity.id.get)
+          SqlProductManager.getById(createdEntity.sku.get)
         )
       })
 
@@ -56,7 +56,7 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
 
       val future = for {
         createdEntity <- SqlProductManager.create(product)
-        countOfDeletedEntities <- SqlProductManager.delete(createdEntity.id.get)
+        countOfDeletedEntities <- SqlProductManager.delete(createdEntity.sku.get)
       } yield countOfDeletedEntities
 
       ScalaFutures.whenReady(future.toScala)(countOfDeletedEntities =>

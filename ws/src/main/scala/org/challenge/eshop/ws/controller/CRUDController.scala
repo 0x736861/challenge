@@ -6,7 +6,6 @@ import org.challenge.eshop.core.service.BaseService
 import org.challenge.eshop.ws.exception.{ContentParseException, IncorrectContentException, IncorrectParameterException, ResourceNotFoundException}
 import org.challenge.eshop.ws.to.converter.TOConverter
 import org.jboss.netty.handler.codec.http.HttpResponseStatus
-import org.jboss.netty.util.CharsetUtil
 
 /**
  * Created by Alexander Shurmin.
@@ -43,18 +42,18 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
       .map(render.json)
   }
 
-  post(baseUrlPath) { request =>
-    val content = Try(request.content.toString(CharsetUtil.UTF_8)).getOrElse(throw new IncorrectContentException)
-    val to = Try(fromJson[TransferObjectType](content)).getOrElse(throw new ContentParseException(content))
+  post(baseUrlPath) { implicit request =>
+    val content = contentAsString
+    val to = Try(fromJson[TransferObjectType](contentAsString)).getOrElse(throw new ContentParseException(content))
 
     modelService.create(toModel(to))
       .map(toTransferObject)
       .map(render.status(HttpResponseStatus.CREATED.getCode).json)
   }
 
-  post(s"$baseUrlPath/:id") { request =>
+  post(s"$baseUrlPath/:id") { implicit request =>
     val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
-    val content = Try(request.content.toString(CharsetUtil.UTF_8)).getOrElse(throw new IncorrectContentException)
+    val content = contentAsString
     val to = Try(fromJson[TransferObjectType](content)).getOrElse(throw new ContentParseException(content))
 
     modelService.getById(id).flatMap {
@@ -66,10 +65,10 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
     }
   }
 
-  put(s"$baseUrlPath/:id") { request =>
+  put(s"$baseUrlPath/:id") { implicit request =>
     val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
-    val to = Try(fromJson[TransferObjectType](request.content.toString(CharsetUtil.UTF_8)))
-      .getOrElse(throw new IncorrectContentException)
+    val content = contentAsString
+    val to = Try(fromJson[TransferObjectType](content)).getOrElse(throw new IncorrectContentException)
 
     modelService.getById(id).flatMap {
       case Some(model) =>

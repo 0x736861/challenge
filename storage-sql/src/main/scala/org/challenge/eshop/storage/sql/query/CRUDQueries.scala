@@ -6,7 +6,7 @@ import org.squeryl.{KeyedEntity, Table}
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseQueries {
+trait CRUDQueries {
 
   type EntityType <: KeyedEntity[String]
 

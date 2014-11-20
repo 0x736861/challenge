@@ -4,7 +4,7 @@ import com.twitter.finatra.FinatraServer
 import com.twitter.util.{Await, Future}
 import org.challenge.eshop.model.ProductInfo
 import org.challenge.eshop.storage.sql.{JdbcSettings, SqlDbManager}
-import org.challenge.eshop.ws.controller.{ProductController, TimeController}
+import org.challenge.eshop.ws.controller.{CartController, ProductController, TimeController}
 
 /**
  * Created by Alexander Shurmin.
@@ -38,6 +38,7 @@ object EShopWebServer extends FinatraServer {
 
     register(new TimeController)
     register(new ProductController(apiVersion))
+    register(new CartController(apiVersion))
   }
 
   private def fillDemoDatabase(): Unit = {

@@ -6,7 +6,7 @@ import org.challenge.eshop.storage.sql.schema.entity.ProductEntity
 /**
  * Created by Alexander Shurmin.
  */
-object ProductQueries extends BaseQueries {
+object ProductQueries extends CRUDQueries {
 
   type EntityType = ProductEntity
 

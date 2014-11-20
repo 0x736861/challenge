@@ -1,13 +1,15 @@
 package org.challenge.eshop.ws.controller
 
-import com.twitter.finatra.Controller
+import com.twitter.finatra.{Request, Controller}
+import com.twitter.util.Try
 import org.challenge.eshop.ws.exception.{ContentParseException, IncorrectContentException, IncorrectParameterException, ResourceNotFoundException}
 import org.jboss.netty.handler.codec.http.HttpResponseStatus
+import org.jboss.netty.util.CharsetUtil
 
 /**
  * Created by Alexander Shurmin.
  */
-abstract class BaseController extends Controller {
+trait BaseController extends Controller {
 
   error { request =>
     request.error match {
@@ -26,6 +28,10 @@ abstract class BaseController extends Controller {
 
   notFound { request =>
     render.status(404).plain("not found yo").toFuture
+  }
+
+  def contentAsString(implicit request: Request): String = {
+    Try(request.content.toString(CharsetUtil.UTF_8)).getOrElse(throw new IncorrectContentException)
   }
 
 }

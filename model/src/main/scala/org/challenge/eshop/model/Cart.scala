@@ -3,6 +3,4 @@ package org.challenge.eshop.model
 /**
  * Created by Alexander Shurmin.
  */
-class Cart {
-
-}
+case class Cart(id: Option[String])

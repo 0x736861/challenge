@@ -1,6 +1,6 @@
 package org.challenge.eshop.storage.sql.schema
 
-import org.challenge.eshop.storage.sql.schema.entity.ProductEntity
+import org.challenge.eshop.storage.sql.schema.entity.{CartEntity, ProductEntity}
 import org.squeryl.{Table, KeyedEntity, Schema}
 
 import org.squeryl.PrimitiveTypeMode._
@@ -14,10 +14,16 @@ object EShopSchema extends Schema {
 
   val product = table[ProductEntity]("Product")
 
+  val cart = table[CartEntity]("Cart")
+
 
   // Column attributes
 
   on(product)(p => declare(
     p.id is primaryKey
+  ))
+
+  on(cart)(c => declare(
+    c.id is primaryKey
   ))
 }
