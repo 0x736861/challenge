@@ -1,4 +1,4 @@
-# Shopping cart RESTFull service example
+# Shopping cart RESTFul service example
 
 
 ### Runs on port 7070
