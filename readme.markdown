@@ -6,7 +6,7 @@
     mvn clean install
     java -jar ws/target/ws-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-### Testing API
+### Test an API
 
 #### Create a product
 
