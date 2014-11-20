@@ -8,7 +8,7 @@ import org.challenge.eshop.ws.to.converter.ProductTOConverter
 /**
  * Created by Alexander Shurmin.
  */
-class ProductController(apiVersion: String)(implicit productService: ProductService) extends CRUDController(s"/api/$apiVersion/products") {
+class ProductController(apiVersion: String)(implicit productService: ProductService) extends CRUDController(s"/api/$apiVersion/product") {
 
   override type ModelType = ProductInfo
 
@@ -18,5 +18,9 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
 
   override val modelService = productService
 
-  override val converter = ProductTOConverter
+  override def toTransferObject = ProductTOConverter.toTransferObject
+
+  override def mergeTransferObjectToModel = ProductTOConverter.mergeTransferObjectToModel
+
+  override def toModel = ProductTOConverter.toModel
 }

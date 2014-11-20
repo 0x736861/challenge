@@ -2,9 +2,9 @@ package org.challenge.eshop.ws.controller
 
 import com.twitter.util.Try
 import org.challenge.eshop.common.converter.JsonConverter._
-import org.challenge.eshop.core.service.BaseService
-import org.challenge.eshop.ws.exception.{ContentParseException, IncorrectContentException, IncorrectParameterException, ResourceNotFoundException}
-import org.challenge.eshop.ws.to.converter.TOConverter
+import org.challenge.eshop.core.service.CRUDService
+import org.challenge.eshop.ws.exception.{ContentParseException, IncorrectContentException, ResourceNotFoundException}
+import org.challenge.eshop.ws.to.ProductTO
 import org.jboss.netty.handler.codec.http.HttpResponseStatus
 
 /**
@@ -18,14 +18,16 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
 
   implicit val transferObjectManifest: Manifest[TransferObjectType]
 
-  val modelService: BaseService[ModelType]
+  val modelService: CRUDService[ModelType]
 
-  val converter: TOConverter[TransferObjectType, ModelType]
+  def toTransferObject: (ModelType) => TransferObjectType
 
-  import converter._
+  def mergeTransferObjectToModel: (TransferObjectType, ModelType) => ModelType
 
-  get(s"$baseUrlPath/:id") { request =>
-    val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
+  def toModel: (TransferObjectType) => ModelType
+
+  get(s"$baseUrlPath/:id") { implicit request =>
+    val id = routeParam("id")
 
     modelService.getById(id) map {
       case Some(model) => render.json(toTransferObject(model))
@@ -33,7 +35,7 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
     }
   }
 
-  get(baseUrlPath) { request =>
+  get(baseUrlPath) { implicit request =>
     val offset = request.params.getIntOrElse("offset", 0)
     val limit = request.params.getIntOrElse("limit", 10)
 
@@ -44,7 +46,8 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
 
   post(baseUrlPath) { implicit request =>
     val content = contentAsString
-    val to = Try(fromJson[TransferObjectType](contentAsString)).getOrElse(throw new ContentParseException(content))
+    val a = fromJson[ProductTO](content)
+    val to = Try(fromJson[TransferObjectType](content)(transferObjectManifest)).getOrElse(throw new ContentParseException(content))
 
     modelService.create(toModel(to))
       .map(toTransferObject)
@@ -52,9 +55,9 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
   }
 
   post(s"$baseUrlPath/:id") { implicit request =>
-    val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
+    val id = routeParam("id")
     val content = contentAsString
-    val to = Try(fromJson[TransferObjectType](content)).getOrElse(throw new ContentParseException(content))
+    val to = Try(fromJson[TransferObjectType](content)(transferObjectManifest)).getOrElse(throw new ContentParseException(content))
 
     modelService.getById(id).flatMap {
       case Some(model) =>
@@ -66,9 +69,9 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
   }
 
   put(s"$baseUrlPath/:id") { implicit request =>
-    val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
+    val id = routeParam("id")
     val content = contentAsString
-    val to = Try(fromJson[TransferObjectType](content)).getOrElse(throw new IncorrectContentException)
+    val to = Try(fromJson[TransferObjectType](content)(transferObjectManifest)).getOrElse(throw new IncorrectContentException)
 
     modelService.getById(id).flatMap {
       case Some(model) =>
@@ -79,8 +82,8 @@ abstract class CRUDController(baseUrlPath: String) extends BaseController {
     }
   }
 
-  delete(s"$baseUrlPath/:id") { request =>
-    val id = request.routeParams.getOrElse("id", throw new IncorrectParameterException)
+  delete(s"$baseUrlPath/:id") { implicit request =>
+    val id = routeParam("id")
     modelService.delete(id) flatMap {
       case true => respond(HttpResponseStatus.OK)
       case false => throw new ResourceNotFoundException

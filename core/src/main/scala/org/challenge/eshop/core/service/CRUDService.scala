@@ -6,7 +6,7 @@ import org.challenge.eshop.storage.api.manager.CRUDManager
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseService[T] {
+trait CRUDService[T] {
 
   val entityManager: CRUDManager[T]
 

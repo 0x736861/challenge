@@ -5,5 +5,5 @@ package org.challenge.eshop.model
  * Created by Alexander Shurmin.
  */
 case class CartItem(
-  product: ProductInfo,
+  sku: String,
   quantity: Double)

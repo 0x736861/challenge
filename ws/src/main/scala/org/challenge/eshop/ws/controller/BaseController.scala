@@ -34,4 +34,8 @@ trait BaseController extends Controller {
     Try(request.content.toString(CharsetUtil.UTF_8)).getOrElse(throw new IncorrectContentException)
   }
 
+  def routeParam(name: String)(implicit request: Request): String = {
+    request.routeParams.getOrElse(name, throw new IncorrectParameterException)
+  }
+
 }

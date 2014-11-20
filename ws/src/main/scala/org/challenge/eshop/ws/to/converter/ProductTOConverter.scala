@@ -6,9 +6,9 @@ import org.challenge.eshop.ws.to.ProductTO
 /**
  * Created by Alexander Shurmin.
  */
-object ProductTOConverter extends TOConverter[ProductTO, ProductInfo] {
+object ProductTOConverter {
 
-  override def toTransferObject(model: ProductInfo): ProductTO = {
+  def toTransferObject(model: ProductInfo): ProductTO = {
     ProductTO(
       id = model.sku,
       name = Option(model.name),
@@ -16,14 +16,14 @@ object ProductTOConverter extends TOConverter[ProductTO, ProductInfo] {
     )
   }
 
-  override def mergeTransferObjectToModel(to: ProductTO, model: ProductInfo): ProductInfo = {
+  def mergeTransferObjectToModel(to: ProductTO, model: ProductInfo): ProductInfo = {
     var resultModel = model
     if (to.name.isDefined) resultModel = resultModel.copy(name = to.name.get)
     if (to.price.isDefined) resultModel = resultModel.copy(price = to.price.get)
     resultModel
   }
 
-  override def toModel(to: ProductTO): ProductInfo = {
+  def toModel(to: ProductTO): ProductInfo = {
     ProductInfo(
       sku = to.id,
       name = to.name.getOrElse(throw new IllegalArgumentException),

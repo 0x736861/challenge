@@ -11,8 +11,8 @@ class ProductControllerTest extends FlatSpecHelper {
 
   override def server: FinatraServer = EShopWebServer
 
-  "GET /api/v1/products" should "respond 200" in {
-    get("/api/v1/products")
+  "GET /api/v1/product" should "respond 200" in {
+    get("/api/v1/product")
     response.code should equal(200)
     response.body.length shouldNot equal(0)
   }

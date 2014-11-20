@@ -1,8 +1,13 @@
 package org.challenge.eshop.storage.api.manager
 
-import org.challenge.eshop.model.Cart
+import com.twitter.util.Future
+import org.challenge.eshop.model.{CartItem, Cart}
 
 /**
  * Created by Alexander Shurmin.
  */
-trait CartManager extends CRUDManager[Cart]
+trait CartManager extends CRUDManager[Cart] {
+
+  def addItems(cartId: String, items: List[CartItem]): Future[Unit]
+
+}

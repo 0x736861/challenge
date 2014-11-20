@@ -6,7 +6,7 @@ import org.challenge.eshop.storage.api.EntityManagerFactory
 /**
  * Created by Alexander Shurmin.
  */
-class ProductService(implicit entityManagerFactory: EntityManagerFactory) extends BaseService[ProductInfo] {
+class ProductService(implicit entityManagerFactory: EntityManagerFactory) extends CRUDService[ProductInfo] {
 
   override val entityManager = entityManagerFactory.productManager
 
