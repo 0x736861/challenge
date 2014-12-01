@@ -3,8 +3,9 @@
 
 ### Runs on port 7070
 
-    mvn clean install
-    java -jar ws/target/ws-1.0-SNAPSHOT-jar-with-dependencies.jar
+    sbt
+    project ws
+    run
 
 ### Test an API
 
