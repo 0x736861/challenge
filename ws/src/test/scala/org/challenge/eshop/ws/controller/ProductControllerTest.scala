@@ -14,6 +14,6 @@ class ProductControllerTest extends FlatSpecHelper {
   "GET /api/v1/product" should "respond 200" in {
     get("/api/v1/product")
     response.code should equal(200)
-    response.body.length shouldNot equal(0)
+    response.body.length should not equal 0
   }
 }

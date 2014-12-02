@@ -26,12 +26,18 @@ object EShopBuild extends Build {
 
   lazy val storageApi = Project("storage-api", file("storage-api"))
     .dependsOn(model)
+    .aggregate(model)
 
   lazy val storageSql = Project("storage-sql", file("storage-sql"),
     settings = Seq(
       libraryDependencies ++= slf4j ++ Seq(squeryl, c3p0, h2)
     ))
     .dependsOn(common, storageApi)
+    .aggregate(common, storageApi)
+
+  lazy val storageInMemory = Project("storage-in-memory", file("storage-in-memory"))
+    .dependsOn(common, storageApi)
+    .aggregate(common, storageApi)
 
   lazy val ws = Project("ws", file("ws"),
     settings = Seq(

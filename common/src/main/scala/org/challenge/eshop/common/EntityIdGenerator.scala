@@ -1,4 +1,4 @@
-package org.challenge.eshop.storage.sql.util
+package org.challenge.eshop.common
 
 import scala.util.Random
 

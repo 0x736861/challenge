@@ -1,11 +1,11 @@
 package org.challenge.eshop.storage.sql.manager
 
 import com.twitter.util.Future
+import org.challenge.eshop.common.EntityIdGenerator
 import org.challenge.eshop.model.ProductInfo
 import org.challenge.eshop.storage.api.manager.ProductManager
 import org.challenge.eshop.storage.sql.converter.ProductEntityConverter._
 import org.challenge.eshop.storage.sql.query.ProductQueries
-import org.challenge.eshop.storage.sql.util.EntityIdGenerator
 
 /**
  * Created by Alexander Shurmin.

@@ -1,20 +1,20 @@
 package org.challenge.eshop.storage.api.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.ProductInfo
+import org.challenge.eshop.model.IdEntity
 
 /**
  * Created by Alexander Shurmin.
  */
-trait CRUDManager[T] {
+trait CRUDManager[TKey, TValue <: IdEntity[TKey]] {
 
-  def getById(id: String): Future[Option[T]]
+  def getById(id: TKey): Future[Option[TValue]]
 
-  def getInRange(offset: Int, limit: Int): Future[List[T]]
+  def getInRange(offset: Int, limit: Int): Future[List[TValue]]
 
-  def create(model: T, id: Option[String] = None): Future[T]
+  def create(model: TValue): Future[TValue]
 
-  def update(model: T): Future[Unit]
+  def update(model: TValue): Future[Unit]
 
   def delete(id: String): Future[Int]
 }

@@ -5,4 +5,4 @@ import org.challenge.eshop.model.ProductInfo
 /**
  * Created by Alexander Shurmin.
  */
-trait ProductManager extends CRUDManager[ProductInfo]
+trait ProductManager

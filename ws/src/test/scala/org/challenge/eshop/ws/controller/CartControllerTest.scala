@@ -19,7 +19,7 @@ class CartControllerTest extends FlatSpecHelper {
     post("/api/v1/cart", body = toJson(cartTO))
 
     response.code should equal(201)
-    response.body.length shouldNot equal(0)
+    response.body.length should not equal 0
 
     val resultTO = fromJson[CartTO](response.body)
     resultTO.id.isDefined should equal(true)

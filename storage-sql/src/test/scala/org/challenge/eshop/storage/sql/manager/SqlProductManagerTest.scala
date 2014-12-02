@@ -25,7 +25,6 @@ class SqlProductManagerTest extends BaseSqlStorageTest {
 
       val future = SqlProductManager.create(product)
         .flatMap(createdEntity => SqlProductManager.getById(createdEntity.sku.get).map(entityById => (createdEntity, entityById)))
-
       ScalaFutures.whenReady(future.toScala) {
         case (createdEntity, entityById) =>
           entityById.isDefined shouldEqual true
