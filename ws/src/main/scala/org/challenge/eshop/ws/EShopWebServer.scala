@@ -2,7 +2,7 @@ package org.challenge.eshop.ws
 
 import com.twitter.finatra.FinatraServer
 import com.twitter.util.{Await, Future}
-import org.challenge.eshop.model.ProductInfo
+import org.challenge.eshop.model.Goods
 import org.challenge.eshop.storage.sql.{JdbcSettings, SqlDbManager}
 import org.challenge.eshop.ws.controller.{CartController, ProductController, TimeController}
 
@@ -43,8 +43,8 @@ object EShopWebServer extends FinatraServer {
 
   private def fillDemoDatabase(): Unit = {
     Await.ready(Future.join(
-      productService.create(ProductInfo(name = "product1", price = 11.22)),
-      productService.create(ProductInfo(name = "product2", price = 33.44))
+      productService.create(Goods(name = "product1", price = 11.22)),
+      productService.create(Goods(name = "product2", price = 33.44))
     ))
   }
 }

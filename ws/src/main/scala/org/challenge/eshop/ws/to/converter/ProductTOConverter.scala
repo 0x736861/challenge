@@ -1,6 +1,6 @@
 package org.challenge.eshop.ws.to.converter
 
-import org.challenge.eshop.model.ProductInfo
+import org.challenge.eshop.model.Goods
 import org.challenge.eshop.ws.to.ProductTO
 
 /**
@@ -8,7 +8,7 @@ import org.challenge.eshop.ws.to.ProductTO
  */
 object ProductTOConverter {
 
-  def toTransferObject(model: ProductInfo): ProductTO = {
+  def toTransferObject(model: Goods): ProductTO = {
     ProductTO(
       id = model.sku,
       name = Option(model.name),
@@ -16,15 +16,15 @@ object ProductTOConverter {
     )
   }
 
-  def mergeTransferObjectToModel(to: ProductTO, model: ProductInfo): ProductInfo = {
+  def mergeTransferObjectToModel(to: ProductTO, model: Goods): Goods = {
     var resultModel = model
     if (to.name.isDefined) resultModel = resultModel.copy(name = to.name.get)
     if (to.price.isDefined) resultModel = resultModel.copy(price = to.price.get)
     resultModel
   }
 
-  def toModel(to: ProductTO): ProductInfo = {
-    ProductInfo(
+  def toModel(to: ProductTO): Goods = {
+    Goods(
       sku = to.id,
       name = to.name.getOrElse(throw new IllegalArgumentException),
       price = to.price.getOrElse(throw new IllegalArgumentException)

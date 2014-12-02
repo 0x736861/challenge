@@ -3,7 +3,11 @@ package org.challenge.eshop.model
 /**
  * Created by Alexander Shurmin.
  */
-case class ProductInfo(
+case class Goods(
   sku: Option[String] = None,
   name: String,
-  price: Double)
+  price: Double) extends IdEntity[String] {
+
+  override def id: Option[String] = sku
+
+}

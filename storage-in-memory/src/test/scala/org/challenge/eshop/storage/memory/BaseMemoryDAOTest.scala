@@ -2,31 +2,31 @@ package org.challenge.eshop.storage.memory
 
 import com.twitter.util.Await
 import org.challenge.eshop.model.IdEntity
-import org.challenge.eshop.storage.memory.manager.BaseManager
+import org.challenge.eshop.storage.memory.dao.BaseInMemoryDAO
 import org.scalatest.FunSpec
 
 /**
  * Created by Alexander Shurmin.
  */
 
-case class IntEntity(id: Option[String], value: Int) extends IdEntity[String]
+case class Foo(id: Option[String], value: Int) extends IdEntity[String]
 
-class IntManager extends BaseManager[IntEntity]
+class FooDAO extends BaseInMemoryDAO[Foo]
 
-class BaseMemoryTest extends FunSpec {
+class BaseMemoryDAOTest extends FunSpec {
 
-  describe("BaseManager") {
+  describe("BaseMemoryDAO") {
 
     it("should create entity") {
-      val manager = new IntManager
-      val newEntity = IntEntity(Some("11"), 1)
+      val manager = new FooDAO
+      val newEntity = Foo(Some("11"), 1)
       val createdEntity = Await.result(manager.create(newEntity))
       assert(newEntity == createdEntity)
     }
 
     it("should get entity by Id") {
-      val manager = new IntManager
-      val newEntity = IntEntity(Some("11"), 1)
+      val manager = new FooDAO
+      val newEntity = Foo(Some("11"), 1)
       Await.result(manager.create(newEntity))
       val oldEntity = Await.result(manager.getById("11"))
       assert(oldEntity.isDefined)
@@ -34,11 +34,11 @@ class BaseMemoryTest extends FunSpec {
     }
 
     it("should get entities in range") {
-      val manager = new IntManager
+      val manager = new FooDAO
 
-      val entity1 = IntEntity(Some("11"), 1)
-      val entity2 = IntEntity(Some("22"), 2)
-      val entity3 = IntEntity(Some("33"), 3)
+      val entity1 = Foo(Some("11"), 1)
+      val entity2 = Foo(Some("22"), 2)
+      val entity3 = Foo(Some("33"), 3)
 
       Await.result(manager.create(entity1))
       Await.result(manager.create(entity2))
@@ -50,8 +50,8 @@ class BaseMemoryTest extends FunSpec {
     }
 
     it("should delete entity by Id") {
-      val manager = new IntManager
-      val newEntity = IntEntity(Some("11"), 1)
+      val manager = new FooDAO
+      val newEntity = Foo(Some("11"), 1)
       Await.result(manager.create(newEntity))
       Await.result(manager.delete("11"))
       val oldEntity = Await.result(manager.getById("11"))
@@ -59,9 +59,9 @@ class BaseMemoryTest extends FunSpec {
     }
 
     it("should update entity") {
-      val manager = new IntManager
+      val manager = new FooDAO
 
-      val newEntity = IntEntity(Some("11"), 1)
+      val newEntity = Foo(Some("11"), 1)
       Await.result(manager.create(newEntity))
 
       val changedEntity = newEntity.copy(value = 2)

@@ -1,17 +1,16 @@
-package org.challenge.eshop.storage.memory.manager
+package org.challenge.eshop.storage.memory.dao
 
 import com.twitter.util.Future
 import org.challenge.eshop.model.IdEntity
-import org.challenge.eshop.storage.api.manager.CRUDManager
+import org.challenge.eshop.storage.api.dao.BaseDAO
 
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseManager[T <: IdEntity[String]] extends CRUDManager[String, T] {
+trait BaseInMemoryDAO[T <: IdEntity[String]] extends BaseDAO[String, T] {
 
   var entities = Map.empty[String, T]
-
 
   override def getById(id: String): Future[Option[T]] = {
     Future.value(entities.get(id))

@@ -1,14 +1,14 @@
 package org.challenge.eshop.core.service
 
 import com.twitter.util.Future
-import org.challenge.eshop.storage.api.manager.CRUDManager
+import org.challenge.eshop.storage.api.manager.BaseManager
 
 /**
  * Created by Alexander Shurmin.
  */
 trait CRUDService[T] {
 
-  val entityManager: CRUDManager[T]
+  val entityManager: BaseManager[T]
 
   def getById(id: String): Future[Option[T]] = {
     entityManager.getById(id)

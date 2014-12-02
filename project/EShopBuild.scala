@@ -11,7 +11,7 @@ object EShopBuild extends Build {
   )
 
   lazy val root = Project("eshop", file("."))
-    .aggregate(ws)
+    .aggregate(core)
 
   lazy val common = Project("common", file("common"),
     settings = Seq(
@@ -28,21 +28,21 @@ object EShopBuild extends Build {
     .dependsOn(model)
     .aggregate(model)
 
-  lazy val storageSql = Project("storage-sql", file("storage-sql"),
-    settings = Seq(
-      libraryDependencies ++= slf4j ++ Seq(squeryl, c3p0, h2)
-    ))
-    .dependsOn(common, storageApi)
-    .aggregate(common, storageApi)
+//  lazy val storageSql = Project("storage-sql", file("storage-sql"),
+//    settings = Seq(
+//      libraryDependencies ++= slf4j ++ Seq(squeryl, c3p0, h2)
+//    ))
+//    .dependsOn(common, storageApi)
+//    .aggregate(common, storageApi)
 
   lazy val storageInMemory = Project("storage-in-memory", file("storage-in-memory"))
     .dependsOn(common, storageApi)
     .aggregate(common, storageApi)
 
-  lazy val ws = Project("ws", file("ws"),
-    settings = Seq(
-      libraryDependencies ++= Seq(finatra, typeSafeConfig)
-    ))
-    .dependsOn(core, storageSql)
+//  lazy val ws = Project("ws", file("ws"),
+//    settings = Seq(
+//      libraryDependencies ++= Seq(finatra, typeSafeConfig)
+//    ))
+//    .dependsOn(core, storageSql)
 
 }

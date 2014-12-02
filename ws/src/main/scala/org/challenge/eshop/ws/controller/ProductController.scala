@@ -1,7 +1,7 @@
 package org.challenge.eshop.ws.controller
 
 import org.challenge.eshop.core.service.ProductService
-import org.challenge.eshop.model.ProductInfo
+import org.challenge.eshop.model.Goods
 import org.challenge.eshop.ws.to.ProductTO
 import org.challenge.eshop.ws.to.converter.ProductTOConverter
 
@@ -10,7 +10,7 @@ import org.challenge.eshop.ws.to.converter.ProductTOConverter
  */
 class ProductController(apiVersion: String)(implicit productService: ProductService) extends CRUDController(s"/api/$apiVersion/product") {
 
-  override type ModelType = ProductInfo
+  override type ModelType = Goods
 
   override type TransferObjectType = ProductTO
 
