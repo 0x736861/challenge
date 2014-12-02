@@ -8,26 +8,31 @@ import org.challenge.eshop.ws.to.GoodsTO
  */
 object GoodsTOConverter {
 
-  def toTransferObject(model: Goods): GoodsTO = {
-    GoodsTO(
-      sku = model.sku,
-      name = Option(model.name),
-      price = Option(model.price)
-    )
+  implicit class GoodsModelConverter(model: Goods) {
+    def toTransferObject: GoodsTO = {
+      GoodsTO(
+        sku = model.sku,
+        name = Option(model.name),
+        price = Option(model.price)
+      )
+    }
+
+    def updateFrom(to: GoodsTO): Goods = {
+      var resultModel = model
+      if (to.name.isDefined) resultModel = resultModel.copy(name = to.name.get)
+      if (to.price.isDefined) resultModel = resultModel.copy(price = to.price.get)
+      resultModel
+    }
   }
 
-  def mergeTransferObjectToModel(to: GoodsTO, model: Goods): Goods = {
-    var resultModel = model
-    if (to.name.isDefined) resultModel = resultModel.copy(name = to.name.get)
-    if (to.price.isDefined) resultModel = resultModel.copy(price = to.price.get)
-    resultModel
+  implicit class GoodsTOConverter(to: GoodsTO) {
+    def toModel: Goods = {
+      Goods(
+        sku = to.sku,
+        name = to.name.getOrElse(throw new IllegalArgumentException("name")),
+        price = to.price.getOrElse(throw new IllegalArgumentException("price"))
+      )
+    }
   }
 
-  def toModel(to: GoodsTO): Goods = {
-    Goods(
-      sku = to.sku,
-      name = to.name.getOrElse(throw new IllegalArgumentException("name")),
-      price = to.price.getOrElse(throw new IllegalArgumentException("price"))
-    )
-  }
 }

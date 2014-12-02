@@ -16,5 +16,5 @@ trait BaseDAO[TKey, TValue <: IdEntity[TKey]] {
 
   def update(model: TValue): Future[Unit]
 
-  def delete(id: String): Future[Int]
+  def delete(id: TKey): Future[Int]
 }

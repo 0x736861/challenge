@@ -10,17 +10,27 @@ import org.challenge.eshop.storage.api.manager.GoodsManager
 class GoodsService(implicit goodsManager: GoodsManager) extends BaseService {
 
   def get(id: String): Future[Option[Goods]] = {
-    logger.info(s"Get by Id: " + id)
+    logger.info(s"Get goods by Id=$id")
     goodsManager.getById(id)
   }
 
   def get(offset: Int, limit: Int): Future[List[Goods]] = {
-    logger.info(s"Get in range: offset=$offset, limit=$limit")
+    logger.info(s"Get goods in range: offset=$offset, limit=$limit")
     goodsManager.getInRange(offset, limit)
   }
 
   def create(goods: Goods): Future[Goods] = {
-    logger.info("Creating goods: " + goods)
+    logger.info(s"Creating goods: $goods")
     goodsManager.create(goods)
+  }
+
+  def update(goods: Goods): Future[Goods] = {
+    logger.info(s"Updating goods: $goods")
+    goodsManager.update(goods)
+  }
+
+  def delete(id: String): Future[Boolean] = {
+    logger.info(s"Deleting goods by Id=$id")
+    goodsManager.delete(id)
   }
 }

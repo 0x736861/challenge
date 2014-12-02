@@ -2,7 +2,7 @@ package org.challenge.eshop.ws
 
 import org.challenge.eshop.core.service.GoodsService
 import org.challenge.eshop.storage.api.EntityManagerFactory
-import org.challenge.eshop.storage.memory.manager.InMemoryEntityManagerFactory
+import org.challenge.eshop.storage.memory.InMemoryEntityManagerFactory
 
 /**
  * Created by Alexander Shurmin.

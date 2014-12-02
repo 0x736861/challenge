@@ -38,4 +38,51 @@ class GoodsControllerTest extends FlatSpecHelper with BeforeAndAfter {
     response.code should equal(200)
     fromJson[GoodsTO](response.body) should equal(GoodsTO("123", "the goods name", 123.45))
   }
+
+  "PUT /api/v1/goods/123" should "returns updated entity" in {
+    val goodsTO = GoodsTO(name = "new goods name", price = 999.99)
+
+    put("/api/v1/goods/123", body = toJson(goodsTO))
+
+    response.code should equal(200)
+
+    val updatedTO = fromJson[GoodsTO](response.body)
+    updatedTO.name should equal(goodsTO.name)
+    updatedTO.price should equal(goodsTO.price)
+  }
+
+  "PUT /api/v1/goods/123" should "update entity" in {
+    val goodsTO = GoodsTO(name = "name", price = 55.66)
+
+    put("/api/v1/goods/123", body = toJson(goodsTO))
+    response.code should equal(200)
+
+    get("/api/v1/goods/123")
+    val updatedTO = fromJson[GoodsTO](response.body)
+    updatedTO.sku should equal(Some("123"))
+    updatedTO.name should equal(goodsTO.name)
+    updatedTO.price should equal(goodsTO.price)
+  }
+
+  "PUT /api/v1/goods/789" should "create entity" in {
+    val goodsTO = GoodsTO(sku = "789", name = "name", price = 55.66)
+
+    put("/api/v1/goods/789", body = toJson(goodsTO))
+    response.code should equal(200)
+
+    get("/api/v1/goods/789")
+    val updatedTO = fromJson[GoodsTO](response.body)
+    updatedTO.sku should equal(Some("789"))
+    updatedTO.name should equal(goodsTO.name)
+    updatedTO.price should equal(goodsTO.price)
+  }
+
+  "DELETE /api/v1/goods/123" should "delete Goods by Id" in {
+    delete("/api/v1/goods/123")
+    response.code should equal(200)
+
+    delete("/api/v1/goods/123")
+    response.code should equal(404)
+  }
 }
+
