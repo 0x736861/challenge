@@ -1,17 +1,12 @@
 package org.challenge.eshop.ws
 
 import com.twitter.finatra.FinatraServer
-import com.twitter.util.{Await, Future}
-import org.challenge.eshop.model.Goods
-import org.challenge.eshop.storage.sql.{JdbcSettings, SqlDbManager}
-import org.challenge.eshop.ws.controller.{CartController, ProductController, TimeController}
+import org.challenge.eshop.ws.controller.GoodsController
 
 /**
  * Created by Alexander Shurmin.
  */
 object EShopWebServer extends FinatraServer {
-
-  import org.challenge.eshop.ws.Services._
 
   initStorage()
 
@@ -20,31 +15,32 @@ object EShopWebServer extends FinatraServer {
   fillDemoDatabase()
 
   private def initStorage(): Unit = {
-    val settings = JdbcSettings(
-      driverClass = Configuration.dbDriverClass,
-      jdbcUrl = Configuration.dbJdbcUrl,
-      user = Configuration.dbUser,
-      password = Configuration.dbPassword,
-      minPoolSize = Configuration.dbMinPoolSize,
-      maxPoolSize = Configuration.dbMaxPoolSize
-    )
-
-    SqlDbManager.init(settings)
-    SqlDbManager.createSchema()
+    //    val settings = JdbcSettings(
+    //      driverClass = Configuration.dbDriverClass,
+    //      jdbcUrl = Configuration.dbJdbcUrl,
+    //      user = Configuration.dbUser,
+    //      password = Configuration.dbPassword,
+    //      minPoolSize = Configuration.dbMinPoolSize,
+    //      maxPoolSize = Configuration.dbMaxPoolSize
+    //    )
+    //
+    //    SqlDbManager.init(settings)
+    //    SqlDbManager.createSchema()
   }
 
   private def registerControllers() {
+    import org.challenge.eshop.ws.Services._
+
     val apiVersion = Configuration.apiVersion
 
-    register(new TimeController)
-    register(new ProductController(apiVersion))
-    register(new CartController(apiVersion))
+    register(new GoodsController(apiVersion))
+    //register(new CartController(apiVersion))
   }
 
   private def fillDemoDatabase(): Unit = {
-    Await.ready(Future.join(
-      productService.create(Goods(name = "product1", price = 11.22)),
-      productService.create(Goods(name = "product2", price = 33.44))
-    ))
+    //    Await.ready(Future.join(
+    //      productService.create(Goods(name = "product1", price = 11.22)),
+    //      productService.create(Goods(name = "product2", price = 33.44))
+    //    ))
   }
 }

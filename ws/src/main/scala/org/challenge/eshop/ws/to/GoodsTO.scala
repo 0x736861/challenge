@@ -3,8 +3,7 @@ package org.challenge.eshop.ws.to
 /**
  * Created by Alexander Shurmin.
  */
-case class ProductTO(
-  id: Option[String] = None,
+case class GoodsTO(
+  sku: Option[String] = None,
   name: Option[String] = None,
-  price: Option[Double] = None
-  )
+  price: Option[Double] = None)

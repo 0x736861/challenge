@@ -1,20 +1,17 @@
 package org.challenge.eshop.ws
 
-import org.challenge.eshop.core.service.{StoreService, CartService, ProductService}
+import org.challenge.eshop.core.service.GoodsService
 import org.challenge.eshop.storage.api.EntityManagerFactory
-import org.challenge.eshop.storage.sql.SqlEntityManagerFactory
+import org.challenge.eshop.storage.memory.manager.InMemoryEntityManagerFactory
 
 /**
  * Created by Alexander Shurmin.
  */
 object Services {
 
-  implicit val entityManagerFactory: EntityManagerFactory = SqlEntityManagerFactory
+  val entityManagerFactory: EntityManagerFactory = InMemoryEntityManagerFactory
 
-  implicit val storeService = new StoreService
+  implicit val goodsManager = entityManagerFactory.goodsManager
 
-  implicit val productService = new ProductService
-
-  implicit val cartService = new CartService
-
+  implicit val goodsService = new GoodsService
 }

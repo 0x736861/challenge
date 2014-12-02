@@ -1,6 +1,6 @@
-import sbt._
-import sbt.Keys._
 import Dependencies._
+import sbt.Keys._
+import sbt._
 
 
 object EShopBuild extends Build {
@@ -21,6 +21,7 @@ object EShopBuild extends Build {
 
   lazy val core = Project("core", file("core"))
     .dependsOn(model, storageApi)
+    .aggregate(model, storageApi)
 
   lazy val model = Project("model", file("model"))
 
@@ -28,21 +29,22 @@ object EShopBuild extends Build {
     .dependsOn(model)
     .aggregate(model)
 
-//  lazy val storageSql = Project("storage-sql", file("storage-sql"),
-//    settings = Seq(
-//      libraryDependencies ++= slf4j ++ Seq(squeryl, c3p0, h2)
-//    ))
-//    .dependsOn(common, storageApi)
-//    .aggregate(common, storageApi)
+  //  lazy val storageSql = Project("storage-sql", file("storage-sql"),
+  //    settings = Seq(
+  //      libraryDependencies ++= slf4j ++ Seq(squeryl, c3p0, h2)
+  //    ))
+  //    .dependsOn(common, storageApi)
+  //    .aggregate(common, storageApi)
 
   lazy val storageInMemory = Project("storage-in-memory", file("storage-in-memory"))
     .dependsOn(common, storageApi)
     .aggregate(common, storageApi)
 
-//  lazy val ws = Project("ws", file("ws"),
-//    settings = Seq(
-//      libraryDependencies ++= Seq(finatra, typeSafeConfig)
-//    ))
-//    .dependsOn(core, storageSql)
+  lazy val ws = Project("ws", file("ws"),
+    settings = Seq(
+      libraryDependencies ++= Seq(finatra, typeSafeConfig)
+    ))
+    .dependsOn(core, storageInMemory)
+    .aggregate(core, storageInMemory)
 
 }

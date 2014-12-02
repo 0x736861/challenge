@@ -6,7 +6,7 @@ import org.challenge.eshop.storage.api.dao.{BaseDAO, GoodsDAO}
 /**
  * Created by Alexander Shurmin.
  */
-case class GoodsManager(implicit goodsDao: GoodsDAO) extends BaseManager[String, Goods] {
+case class GoodsManager(goodsDao: GoodsDAO) extends BaseManager[String, Goods] {
 
   override val primaryDao: BaseDAO[String, Goods] = goodsDao
 }
