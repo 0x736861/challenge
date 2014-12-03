@@ -50,15 +50,16 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
   }
 
   /**
-   * Create new Product by Id
+   * Update existed Product by Id
    */
   post(s"$baseUrl/:id") { implicit request =>
     val id = routeParam("id")
     val to = fromContent[ProductTO]
 
-    productService.create(to.toModel.copy(id = Some(id)))
-      .map(_.toTransferObject)
-      .map(render.status(HttpResponseStatus.OK.getCode).json)
+    productService.get(id).flatMap {
+      case Some(model) => productService.update(model.updateFrom(to)).map(render.json)
+      case _ => throw new ResourceNotFoundException
+    }
   }
 
   /**

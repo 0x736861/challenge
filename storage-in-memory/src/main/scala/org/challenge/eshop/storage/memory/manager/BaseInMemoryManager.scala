@@ -21,7 +21,10 @@ trait BaseInMemoryManager[TEntity <: BaseEntity[String]] {
   }
 
   def createEntity(model: TEntity): Future[TEntity] = {
-    model.id = Some(EntityIdGenerator.nextId)
+    model.id match {
+      case Some(_) =>
+      case None => model.id = Some(EntityIdGenerator.nextId)
+    }
     primaryDao.create(model)
   }
 

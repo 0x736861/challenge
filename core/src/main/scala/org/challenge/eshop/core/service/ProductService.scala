@@ -21,7 +21,6 @@ class ProductService(implicit productManager: ProductManager) extends BaseServic
   }
 
   def create(product: Product): Future[Product] = {
-    require(product.id.isEmpty)
     logger.info(s"Creating product: $product")
     productManager.create(product)
   }
