@@ -1,12 +1,12 @@
 package org.challenge.eshop.storage.api.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.IdEntity
+import org.challenge.eshop.model.Entity
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseManager[TKey, TValue <: IdEntity[TKey]] {
+trait BaseManager[TKey, TValue <: Entity[TKey]] {
 
   def getById(id: TKey): Future[Option[TValue]]
 

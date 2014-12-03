@@ -1,9 +1,8 @@
 package org.challenge.eshop.storage.memory
 
 import org.challenge.eshop.storage.api.EntityManagerFactory
-import org.challenge.eshop.storage.api.manager.{CartItemManager, GoodsManager}
-import org.challenge.eshop.storage.memory.dao.{CartItemInMemoryDAO, GoodsInMemoryDAO}
-import org.challenge.eshop.storage.memory.manager.{CartItemInMemoryManager, GoodsInMemoryManager}
+import org.challenge.eshop.storage.api.manager.{CartItemManager, ProductManager}
+import org.challenge.eshop.storage.memory.manager.{CartItemInMemoryManager, ProductInMemoryManager}
 
 /**
  * Created by Alexander Shurmin.
@@ -14,7 +13,7 @@ object InMemoryEntityManagerFactory extends EntityManagerFactory {
     new CartItemInMemoryManager
   }
 
-  lazy val goodsManager: GoodsManager = {
-    new GoodsInMemoryManager
+  lazy val productManager: ProductManager = {
+    new ProductInMemoryManager
   }
 }

@@ -1,14 +1,14 @@
 package org.challenge.eshop.storage.memory.dao
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.IdEntity
+import org.challenge.eshop.model.Entity
 import org.challenge.eshop.storage.api.dao.BaseDAO
 
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseInMemoryDAO[TValue <: IdEntity[String]] extends BaseDAO[String, TValue] {
+trait BaseInMemoryDAO[TValue <: Entity[String]] extends BaseDAO[String, TValue] {
 
   var entities = Map.empty[String, TValue]
 

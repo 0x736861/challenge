@@ -1,14 +1,14 @@
 package org.challenge.eshop.storage.memory.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.IdEntity
+import org.challenge.eshop.model.Entity
 import org.challenge.eshop.storage.api.manager.BaseManager
 import org.challenge.eshop.storage.memory.dao.BaseInMemoryDAO
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseInMemoryManager[TValue <: IdEntity[String]] extends BaseManager[String, TValue] {
+trait BaseInMemoryManager[TValue <: Entity[String]] extends BaseManager[String, TValue] {
 
   val primaryDao: BaseInMemoryDAO[TValue]
 

@@ -3,7 +3,7 @@ package org.challenge.eshop.model
 /**
  * Created by Alexander Shurmin.
  */
-trait IdEntity[TKey] {
+trait Entity[TKey] {
 
   def id: Option[TKey]
 

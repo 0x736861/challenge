@@ -1,12 +1,12 @@
 package org.challenge.eshop.storage.api.dao
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.IdEntity
+import org.challenge.eshop.model.Entity
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseDAO[TKey, TValue <: IdEntity[TKey]] {
+trait BaseDAO[TKey, TValue <: Entity[TKey]] {
 
   def getById(id: TKey): Future[Option[TValue]]
 

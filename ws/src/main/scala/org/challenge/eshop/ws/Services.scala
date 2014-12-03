@@ -1,6 +1,6 @@
 package org.challenge.eshop.ws
 
-import org.challenge.eshop.core.service.GoodsService
+import org.challenge.eshop.core.service.ProductService
 import org.challenge.eshop.storage.api.EntityManagerFactory
 import org.challenge.eshop.storage.memory.InMemoryEntityManagerFactory
 
@@ -11,7 +11,7 @@ object Services {
 
   val entityManagerFactory: EntityManagerFactory = InMemoryEntityManagerFactory
 
-  implicit val goodsManager = entityManagerFactory.goodsManager
+  implicit val productManager = entityManagerFactory.productManager
 
-  implicit val goodsService = new GoodsService
+  implicit val productService = new ProductService
 }

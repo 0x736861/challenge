@@ -1,7 +1,7 @@
 package org.challenge.eshop.storage.memory
 
 import com.twitter.util.Await
-import org.challenge.eshop.model.IdEntity
+import org.challenge.eshop.model.Entity
 import org.challenge.eshop.storage.memory.dao.BaseInMemoryDAO
 import org.scalatest.FunSpec
 
@@ -9,7 +9,7 @@ import org.scalatest.FunSpec
  * Created by Alexander Shurmin.
  */
 
-case class Foo(id: Option[String], value: Int) extends IdEntity[String]
+case class Foo(id: Option[String], value: Int) extends Entity[String]
 
 class FooDAO extends BaseInMemoryDAO[Foo]
 

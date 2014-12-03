@@ -1,7 +1,7 @@
 package org.challenge.eshop.ws
 
 import com.twitter.finatra.FinatraServer
-import org.challenge.eshop.ws.controller.GoodsController
+import org.challenge.eshop.ws.controller.ProductController
 
 /**
  * Created by Alexander Shurmin.
@@ -33,7 +33,7 @@ object EShopWebServer extends FinatraServer {
 
     val apiVersion = Configuration.apiVersion
 
-    register(new GoodsController(apiVersion))
+    register(new ProductController(apiVersion))
     //register(new CartController(apiVersion))
   }
 

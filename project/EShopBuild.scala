@@ -15,7 +15,7 @@ object EShopBuild extends Build {
 
   lazy val common = Project("common", file("common"),
     settings = Seq(
-      libraryDependencies ++= jackson
+      libraryDependencies ++= Seq(json4sNative)
     )
   )
 

@@ -2,7 +2,9 @@ package org.challenge.eshop.ws.controller
 
 import com.twitter.finatra.{Request, Controller}
 import com.twitter.util.Try
+import org.challenge.eshop.common.converter.JsonConverter._
 import org.challenge.eshop.ws.exception.{ContentParseException, IncorrectContentException, IncorrectParameterException, ResourceNotFoundException}
+import org.challenge.eshop.ws.to.ProductTO
 import org.jboss.netty.handler.codec.http.HttpResponseStatus
 import org.jboss.netty.util.CharsetUtil
 
@@ -38,4 +40,8 @@ trait BaseController extends Controller {
     request.routeParams.getOrElse(name, throw new IncorrectParameterException)
   }
 
+  def fromContent[T](implicit request: Request, mf: Manifest[T]): T = {
+    val content = contentAsString
+    Try(fromJson[T](content)).getOrElse(throw new ContentParseException(content))
+  }
 }

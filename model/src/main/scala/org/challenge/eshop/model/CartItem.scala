@@ -8,5 +8,5 @@ case class CartItem(
   id: Option[String] = None,
   sku: String,
   quantity: Double,
-  product: Option[Goods] = None) extends IdEntity[String] {
+  product: Option[Product] = None) extends Entity[String] {
 }
