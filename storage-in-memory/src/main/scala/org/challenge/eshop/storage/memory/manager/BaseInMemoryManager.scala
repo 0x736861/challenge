@@ -1,39 +1,40 @@
 package org.challenge.eshop.storage.memory.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.Entity
-import org.challenge.eshop.storage.api.manager.BaseManager
+import org.challenge.eshop.common.EntityIdGenerator
+import org.challenge.eshop.storage.api.dao.entity.BaseEntity
 import org.challenge.eshop.storage.memory.dao.BaseInMemoryDAO
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseInMemoryManager[TValue <: Entity[String]] extends BaseManager[String, TValue] {
+trait BaseInMemoryManager[TEntity <: BaseEntity[String]] {
 
-  val primaryDao: BaseInMemoryDAO[TValue]
+  val primaryDao: BaseInMemoryDAO[TEntity]
 
-  def getById(id: String): Future[Option[TValue]] = {
+  def getEntityById(id: String): Future[Option[TEntity]] = {
     primaryDao.getById(id)
   }
 
-  def getInRange(offset: Int, limit: Int): Future[List[TValue]] = {
+  def getEntitiesInRange(offset: Int, limit: Int): Future[List[TEntity]] = {
     primaryDao.getInRange(offset, limit)
   }
 
-  def create(model: TValue): Future[TValue] = {
+  def createEntity(model: TEntity): Future[TEntity] = {
+    model.id = Some(EntityIdGenerator.nextId)
     primaryDao.create(model)
   }
 
-  def update(model: TValue): Future[TValue] = {
+  def updateEntity(model: TEntity): Future[TEntity] = {
     isExists(model) flatMap {
       case true =>
         primaryDao.update(model)
-          .flatMap(_ => getById(model.id.get) map (_.get))
+          .flatMap(_ => getEntityById(model.id.get) map (_.get))
       case false => Future.exception(new Exception(s"Entity with Id=${model.id} not found"))
     }
   }
 
-  def delete(id: String): Future[Boolean] = {
+  def deleteEntity(id: String): Future[Boolean] = {
     primaryDao.delete(id) flatMap {
       case 0 => Future.False
       case 1 => Future.True
@@ -41,10 +42,10 @@ trait BaseInMemoryManager[TValue <: Entity[String]] extends BaseManager[String, 
     }
   }
 
-  private def isExists(model: TValue): Future[Boolean] = {
+  private def isExists(model: TEntity): Future[Boolean] = {
     model.id match {
       case Some(id) =>
-        getById(id) map {
+        getEntityById(id) map {
           case Some(_) => true
           case _ => false
         }

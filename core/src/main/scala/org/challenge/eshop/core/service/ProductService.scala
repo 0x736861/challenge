@@ -3,6 +3,7 @@ package org.challenge.eshop.core.service
 import com.twitter.util.Future
 import org.challenge.eshop.model.Product
 import org.challenge.eshop.storage.api.manager.ProductManager
+import org.scalactic.Requirements._
 
 /**
  * Created by Alexander Shurmin.
@@ -20,6 +21,7 @@ class ProductService(implicit productManager: ProductManager) extends BaseServic
   }
 
   def create(product: Product): Future[Product] = {
+    require(product.id.isEmpty)
     logger.info(s"Creating product: $product")
     productManager.create(product)
   }

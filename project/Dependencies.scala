@@ -12,6 +12,8 @@ object Dependencies {
 
   val json4sNative = "org.json4s" %% "json4s-native" % "3.2.11"
 
+  val scalactic = "org.scalactic" % "scalactic_2.10" % "2.2.1"
+
   val squeryl = "org.squeryl" % "squeryl_2.10" % "0.9.5-6"
   val c3p0 = "com.mchange" % "c3p0" % "0.9.5-pre8"
   val h2 = "com.h2database" % "h2" % "1.4.181"

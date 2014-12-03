@@ -4,7 +4,7 @@ import org.challenge.eshop.common.converter.JsonConverter
 import org.challenge.eshop.core.service.ProductService
 import org.challenge.eshop.ws.exception.ResourceNotFoundException
 import org.challenge.eshop.ws.to.ProductTO
-import org.challenge.eshop.ws.to.converter.GoodsTOConverter._
+import org.challenge.eshop.ws.to.converter.ProductTOConverter._
 import org.jboss.netty.handler.codec.http.HttpResponseStatus
 
 /**
@@ -39,7 +39,7 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
   }
 
   /**
-   * Create new Product with new Id
+   * Create new Product and assign to it new Id
    */
   post(baseUrl) { implicit request =>
     val to = fromContent[ProductTO]
@@ -56,7 +56,7 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
     val id = routeParam("id")
     val to = fromContent[ProductTO]
 
-    productService.create(to.toModel.copy(sku = Some(id)))
+    productService.create(to.toModel.copy(id = Some(id)))
       .map(_.toTransferObject)
       .map(render.status(HttpResponseStatus.OK.getCode).json)
   }
@@ -73,7 +73,7 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
         val mergedModel = model.updateFrom(to)
         productService.update(mergedModel).map(_ => render.json(mergedModel))
       case _ =>
-        val modelWithId = to.toModel.copy(sku = Some(id))
+        val modelWithId = to.toModel.copy(id = Some(id))
         productService.create(modelWithId).map(render.json)
     }
   }

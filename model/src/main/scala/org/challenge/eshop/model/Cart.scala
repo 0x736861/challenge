@@ -5,4 +5,4 @@ package org.challenge.eshop.model
  */
 case class Cart(
   id: Option[String],
-  items: Option[List[CartItem]] = None) extends Entity[String]
+  items: Option[List[CartItem]] = None)

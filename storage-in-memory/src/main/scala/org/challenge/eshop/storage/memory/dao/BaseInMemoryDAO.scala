@@ -1,36 +1,38 @@
 package org.challenge.eshop.storage.memory.dao
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.Entity
+import org.challenge.eshop.common.EntityIdGenerator
 import org.challenge.eshop.storage.api.dao.BaseDAO
+import org.challenge.eshop.storage.api.dao.entity.BaseEntity
 
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseInMemoryDAO[TValue <: Entity[String]] extends BaseDAO[String, TValue] {
+trait BaseInMemoryDAO[TEntity <: BaseEntity[String]] extends BaseDAO[String, TEntity] {
 
-  var entities = Map.empty[String, TValue]
+  var entities = Map.empty[String, TEntity]
 
-  override def getById(id: String): Future[Option[TValue]] = {
+  override def getById(id: String): Future[Option[TEntity]] = {
     Future.value(entities.get(id))
   }
 
-  override def getInRange(offset: Int, limit: Int): Future[List[TValue]] = {
+  override def getInRange(offset: Int, limit: Int): Future[List[TEntity]] = {
     Future.value(entities.toList.sortBy(_._1).drop(offset).take(limit).map(_._2))
   }
 
-  override def create(model: TValue): Future[TValue] = {
-    model.id match {
-      case Some(id) =>
-        entities = entities + (id -> model)
-        Future.value(model)
-      case None =>
-        Future.exception(new IllegalArgumentException("id"))
+  override def create(model: TEntity): Future[TEntity] = {
+    val modelWithId = model.id match {
+      case Some(_) => model
+      case _ =>
+        model.id = Some(EntityIdGenerator.nextId)
+        model
     }
+    entities = entities + (modelWithId.id.get -> modelWithId)
+    Future.value(model)
   }
 
-  override def update(model: TValue): Future[Unit] = {
+  override def update(model: TEntity): Future[Unit] = {
     model.id match {
       case Some(id) =>
         entities = entities + (id -> model)

@@ -1,20 +1,19 @@
 package org.challenge.eshop.storage.api.manager
 
 import com.twitter.util.Future
-import org.challenge.eshop.model.Entity
 
 /**
  * Created by Alexander Shurmin.
  */
-trait BaseManager[TKey, TValue <: Entity[TKey]] {
+trait BaseManager[TKey, TEntity] {
 
-  def getById(id: TKey): Future[Option[TValue]]
+  def getById(id: TKey): Future[Option[TEntity]]
 
-  def getInRange(offset: Int, limit: Int): Future[List[TValue]]
+  def getInRange(offset: Int, limit: Int): Future[List[TEntity]]
 
-  def create(model: TValue): Future[TValue]
+  def create(model: TEntity): Future[TEntity]
 
-  def update(model: TValue): Future[TValue]
+  def update(model: TEntity): Future[TEntity]
 
   def delete(id: String): Future[Boolean]
 }

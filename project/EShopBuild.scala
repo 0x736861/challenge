@@ -7,7 +7,7 @@ object EShopBuild extends Build {
 
   override def settings = super.settings ++ Seq(
     scalaVersion := "2.10.3",
-    libraryDependencies ++= twitterUtil ++ Seq(scalaTest)
+    libraryDependencies ++= twitterUtil ++ Seq(scalactic, scalaTest)
   )
 
   lazy val root = Project("eshop", file("."))
@@ -20,8 +20,8 @@ object EShopBuild extends Build {
   )
 
   lazy val core = Project("core", file("core"))
-    .dependsOn(model, storageApi)
-    .aggregate(model, storageApi)
+    .dependsOn(common, model, storageApi)
+    .aggregate(common, model, storageApi)
 
   lazy val model = Project("model", file("model"))
 
