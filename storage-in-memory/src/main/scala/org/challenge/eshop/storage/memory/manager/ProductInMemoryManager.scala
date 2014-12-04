@@ -3,7 +3,7 @@ package org.challenge.eshop.storage.memory.manager
 import com.twitter.util.Future
 import org.challenge.eshop.model.Product
 import org.challenge.eshop.storage.api.manager.ProductManager
-import org.challenge.eshop.storage.memory.converter.ProductEntityConverter._
+import org.challenge.eshop.storage.memory.dao.entity.converter.ProductEntityConverter._
 import org.challenge.eshop.storage.memory.dao.ProductInMemoryDAO
 import org.challenge.eshop.storage.memory.dao.entity.ProductEntity
 

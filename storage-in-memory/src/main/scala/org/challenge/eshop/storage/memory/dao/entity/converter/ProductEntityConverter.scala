@@ -1,4 +1,4 @@
-package org.challenge.eshop.storage.memory.converter
+package org.challenge.eshop.storage.memory.dao.entity.converter
 
 import org.challenge.eshop.model.Product
 import org.challenge.eshop.storage.memory.dao.entity.ProductEntity

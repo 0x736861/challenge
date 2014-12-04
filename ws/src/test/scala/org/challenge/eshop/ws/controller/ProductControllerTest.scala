@@ -29,7 +29,7 @@ class ProductControllerTest extends FlatSpecHelper with BeforeAndAfter {
 
     response.code should equal(201)
     val createdProduct = fromJson[ProductTO](response.body)
-    createdProduct.id.isDefined shouldBe true
+    createdProduct.id.isDefined should equal(true)
     compare(productTO, createdProduct)
   }
 

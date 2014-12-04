@@ -35,7 +35,7 @@ object EShopBuild extends Build {
 
   lazy val ws = Project("ws", file("ws"),
     settings = Seq(
-      libraryDependencies ++= Seq(finatra, typeSafeConfig, springSecurity)
+      libraryDependencies ++= Seq(finatra, typeSafeConfig)
     ))
     .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
     .dependsOn(core, storageInMemory)

@@ -3,6 +3,6 @@ package org.challenge.eshop.model
 /**
  * Created by Alexander Shurmin.
  */
-class Customer {
-
-}
+case class Customer(
+  id: Option[String],
+  name: String)
