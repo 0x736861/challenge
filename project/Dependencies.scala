@@ -23,9 +23,8 @@ object Dependencies {
   val slf4j = Seq(slf4jApi, slf4jSimple)
 
   val finatra = "com.twitter" % "finatra_2.10" % "1.5.3"
-  val typeSafeConfig = "com.typesafe" % "config" % "1.2.1"
 
-  val springSecurity = "org.springframework.security" % "spring-security-web" % "3.2.5.RELEASE"
+  val typeSafeConfig = "com.typesafe" % "config" % "1.2.1"
 
   val scalaTest = "org.scalatest" % "scalatest_2.10" % "2.2.1" % Test
 }
