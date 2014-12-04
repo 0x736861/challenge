@@ -15,7 +15,7 @@ object EShopBuild extends Build {
 
   lazy val common = Project("common", file("common"),
     settings = Seq(
-      libraryDependencies ++= Seq(json4sNative)
+      libraryDependencies ++= Seq(json4sJackson)
     )
   )
 
@@ -42,8 +42,9 @@ object EShopBuild extends Build {
 
   lazy val ws = Project("ws", file("ws"),
     settings = Seq(
-      libraryDependencies ++= Seq(finatra, typeSafeConfig)
+      libraryDependencies ++= Seq(finatra, typeSafeConfig, springSecurity)
     ))
+    .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
     .dependsOn(core, storageInMemory)
     .aggregate(core, storageInMemory)
 

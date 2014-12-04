@@ -1,12 +1,6 @@
 package org.challenge.eshop.ws.controller
 
-import com.twitter.util.Try
-import org.challenge.eshop.common.converter.JsonConverter._
 import org.challenge.eshop.core.service.CartService
-import org.challenge.eshop.ws.exception.ContentParseException
-import org.challenge.eshop.ws.to.converter.{CartItemTOConverter, CartTOConverter}
-import org.challenge.eshop.ws.to.{CartItemTO, CartTO}
-import org.jboss.netty.handler.codec.http.HttpResponseStatus
 
 /**
  * Created by Alexander Shurmin.

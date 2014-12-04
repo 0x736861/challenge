@@ -10,7 +10,7 @@ object Dependencies {
   val twitterUtilLogging = "com.twitter" % "util-logging_2.10" % twitterUtilVersion
   val twitterUtil = Seq(twitterUtilCore, twitterUtilLogging)
 
-  val json4sNative = "org.json4s" %% "json4s-native" % "3.2.11"
+  val json4sJackson = "org.json4s" %% "json4s-jackson" % "3.2.11"
 
   val scalactic = "org.scalactic" % "scalactic_2.10" % "2.2.1"
 
@@ -24,6 +24,8 @@ object Dependencies {
 
   val finatra = "com.twitter" % "finatra_2.10" % "1.5.3"
   val typeSafeConfig = "com.typesafe" % "config" % "1.2.1"
+
+  val springSecurity = "org.springframework.security" % "spring-security-web" % "3.2.5.RELEASE"
 
   val scalaTest = "org.scalatest" % "scalatest_2.10" % "2.2.1" % Test
 }
