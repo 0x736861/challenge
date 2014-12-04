@@ -11,32 +11,16 @@
 
 #### Create a product
 
-    curl -v -X POST -d '{"name":"product1", "price":11.22}' http://localhost:7070/api/v1/product
+    curl -v -X POST -d '{"sku": "123", "name":"product1", "price":11.22}' http://localhost:7070/api/v1/products
 
     Response
     Status: 201 Created
-    Content: {"id":"Ic5kFSODQMOpGfuh","name":"product1","price":11.22}
+    Content: {"id":"U728oFAXZRi4h6ax","sku":"123","name":"product1","price":11.22}
 
-#### Create an empty cart
+### Get product details
 
-    curl -v -X POST -d '{}' http://localhost:7070/api/v1/cart
-
-    Response
-    Status: 201 Created
-    Content: {"id":"oVjKDqL5kJhr1Ifs"}
-
-#### Add product to cart
-
-     curl -v -X POST -d '[{"sku":SKU, "quantity": QUANTITY}]' http://localhost:7070/api/v1/cart/{cartId}/items
-
-     Response
-     Status: 201 Created
-     Content:
-
-#### Show cart with items
-
-    curl -v http://localhost:7070/api/v1/cart/{cartid}
+    curl -v http://localhost:7070/api/v1/products/U728oFAXZRi4h6ax
 
     Response
     Status: 200 OK
-    Content: {"id":"oVjKDqL5kJhr1Ifs","items":[{"sku":"Ic5kFSODQMOpGfuh","quantity":1.0,"product":{"sku":"Ic5kFSODQMOpGfuh","name":"product1","price":11.22}}]}
+    Content: {"id":"U728oFAXZRi4h6ax","sku":"123","name":"product1","price":11.22}
