@@ -17,7 +17,7 @@
     Status: 201 Created
     Content: {"id":"U728oFAXZRi4h6ax","sku":"123","name":"product1","price":11.22}
 
-### Get product details
+#### Get product details
 
     curl -v http://localhost:7070/api/v1/products/U728oFAXZRi4h6ax
 
