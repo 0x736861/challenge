@@ -36,7 +36,7 @@ object EShopBuild extends Build {
     .dependsOn(model)
     .aggregate(model)
 
-  lazy val storageInMemory = Project("storage-in-memory", file("storage-in-memory"))
+  lazy val storageMemory = Project("storage-memory", file("storage-memory"))
     .dependsOn(common, storageApi)
     .aggregate(common, storageApi)
 
@@ -45,7 +45,7 @@ object EShopBuild extends Build {
       libraryDependencies ++= Seq(finatra, typeSafeConfig)
     ))
     .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
-    .dependsOn(core, storageInMemory)
-    .aggregate(core, storageInMemory)
+    .dependsOn(core, storageMemory)
+    .aggregate(core, storageMemory)
 
 }

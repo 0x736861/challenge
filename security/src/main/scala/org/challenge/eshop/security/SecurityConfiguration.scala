@@ -6,11 +6,11 @@ import org.apache.shiro.config.IniSecurityManagerFactory
 /**
  * Created by Alexander Shurmin.
  */
-object SecurityManager {
+object SecurityConfiguration {
 
   def init() {
     val factory = new IniSecurityManagerFactory("classpath:shiro.ini")
-    val securityManager = factory.getInstance()
+    val securityManager: org.apache.shiro.mgt.SecurityManager = factory.getInstance()
     SecurityUtils.setSecurityManager(securityManager)
   }
 }
