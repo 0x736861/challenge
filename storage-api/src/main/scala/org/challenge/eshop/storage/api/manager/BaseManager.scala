@@ -7,6 +7,8 @@ import com.twitter.util.Future
  */
 trait BaseManager[TKey, TEntity] {
 
+  def exists(id: TKey): Future[Boolean]
+
   def getById(id: TKey): Future[Option[TEntity]]
 
   def getInRange(offset: Int, limit: Int): Future[List[TEntity]]
