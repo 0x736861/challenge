@@ -44,7 +44,7 @@ class CustomerController(apiVersion: String)(implicit customerService: CustomerS
   post(baseUrl) { implicit request =>
     val to = fromContent[CustomerTO]
 
-    customerService.create(to.toModel.copy())
+    customerService.create(to.toModel)
       .map(_.toTransferObject)
       .map(render.status(HttpResponseStatus.CREATED.getCode).json)
   }

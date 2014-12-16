@@ -44,7 +44,7 @@ class ProductController(apiVersion: String)(implicit productService: ProductServ
   post(baseUrl) { implicit request =>
     val to = fromContent[ProductTO]
 
-    productService.create(to.toModel.copy())
+    productService.create(to.toModel)
       .map(_.toTransferObject)
       .map(render.status(HttpResponseStatus.CREATED.getCode).json)
   }
