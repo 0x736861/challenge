@@ -25,9 +25,7 @@ object EShopBuild extends Build {
     .aggregate(common, model, storageApi, security)
 
   lazy val security = Project("security", file("security"),
-    settings = Seq(
-      libraryDependencies ++= Seq(shiro)
-    ) ++ CucumberPlugin.cucumberSettingsWithTestPhaseIntegration
+    settings = CucumberPlugin.cucumberSettingsWithTestPhaseIntegration
   )
 
   lazy val model = Project("model", file("model"))

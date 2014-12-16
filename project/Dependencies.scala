@@ -26,8 +26,6 @@ object Dependencies {
 
   val typeSafeConfig = "com.typesafe" % "config" % "1.2.1"
 
-  val shiro = "org.apache.shiro" % "shiro-core" % "1.2.3"
-
   val scalaTest = "org.scalatest" % "scalatest_2.10" % "1.9.2" % Test
 
   lazy val cucumberScala = "info.cukes" % "cucumber-scala_2.10" % "1.1.5" % Test
